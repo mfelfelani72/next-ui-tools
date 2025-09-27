@@ -5,6 +5,12 @@ import { usePathname } from "next/navigation";
 const links = [
   { href: "/", label: "خانه" },
   { href: "/en/home/button", label: "Button" },
+  { href: "/en/home/checkBox", label: "checkBox" },
+  { href: "/en/home/input", label: "input" },
+  { href: "/en/home/modal", label: "modal" },
+  { href: "/en/home/radioButton", label: "radioButton" },
+  { href: "/en/home/table", label: "table" },
+  { href: "/en/home/tab", label: "tab" },
   { href: "/en/home/settings", label: "تنظیمات" },
 ];
 
