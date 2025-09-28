@@ -1,7 +1,8 @@
-import React from "react";
+// components/ui/Button.tsx
+import { ButtonHTMLAttributes, forwardRef } from "react";
+import { cn } from "@/lib/utils";
 
-type ButtonProps = {
-  children?: React.ReactNode;
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?:
     | "primary"
     | "secondary"
@@ -11,77 +12,90 @@ type ButtonProps = {
     | "warning"
     | "icon";
   size?: "sm" | "md" | "lg" | "xl";
-  onClick?: () => void;
-  disabled?: boolean;
   loading?: boolean;
-  type?: "button" | "submit" | "reset";
-  fullWidth?: boolean;
   icon?: React.ReactNode;
   iconPosition?: "left" | "right";
-  className?: string;
-  title?: string;
-};
+  fullWidth?: boolean;
+  clickAnimation?: "none" | "scale" | "bounce" | "pulse" | "press";
+}
 
-export default function Button({
-  children,
-  variant = "primary",
-  size = "md",
-  onClick,
-  disabled = false,
-  loading = false,
-  type = "button",
-  fullWidth = false,
-  icon,
-  iconPosition = "left",
-  className = "",
-  title,
-}: ButtonProps) {
-  const base = `
-    inline-flex items-center justify-center gap-2
-    rounded-xl font-medium focus:outline-none 
-    focus:ring-2 focus:ring-offset-2 transition-all duration-200
-    disabled:opacity-50 disabled:cursor-not-allowed
-    active:scale-95
-    min-h-[2.5rem]
-  `;
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      className,
+      variant = "primary",
+      size = "md",
+      loading = false,
+      icon,
+      iconPosition = "left",
+      fullWidth = false,
+      clickAnimation = "none",
+      children,
+      disabled,
+      ...props
+    },
+    ref
+  ) => {
+    const isDisabled = disabled || loading;
 
-  const sizes = {
-    sm: "px-4 py-2 text-sm min-h-[2rem]",
-    md: "px-6 py-3 text-base min-h-[2.5rem]",
-    lg: "px-8 py-4 text-lg min-h-[3rem]",
-    xl: "px-10 py-5 text-xl min-h-[3.5rem]",
-  };
+    // Variant styles
+    const variantStyles = {
+      primary:
+        "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 focus:ring-blue-500",
+      secondary:
+        "bg-gray-600 text-white hover:bg-gray-700 active:bg-gray-800 focus:ring-gray-500",
+      outline:
+        "border border-gray-300 bg-transparent hover:bg-gray-50 text-gray-700 focus:ring-blue-500",
+      danger:
+        "bg-red-600 text-white hover:bg-red-700 active:bg-red-800 focus:ring-red-500",
+      success:
+        "bg-green-600 text-white hover:bg-green-700 active:bg-green-800 focus:ring-green-500",
+      warning:
+        "bg-yellow-500 text-white hover:bg-yellow-600 active:bg-yellow-700 focus:ring-yellow-500",
+      icon: "bg-transparent hover:bg-gray-100 text-gray-600 focus:ring-gray-500",
+    };
 
-  const variants = {
-    primary:
-      "bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 focus:ring-blue-500 shadow-lg",
-    secondary:
-      "bg-gradient-to-r from-gray-100 to-gray-200 text-gray-900 hover:from-gray-200 hover:to-gray-300 focus:ring-gray-400 shadow-md",
-    outline:
-      "border-2 border-gray-300 bg-transparent text-gray-700 hover:bg-gray-50 focus:ring-blue-400",
-    danger:
-      "bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 focus:ring-red-500 shadow-lg",
-    success:
-      "bg-gradient-to-r from-green-600 to-green-700 text-white hover:from-green-700 hover:to-green-800 focus:ring-green-500 shadow-lg",
-    warning:
-      "bg-gradient-to-r from-yellow-500 to-yellow-600 text-white hover:from-yellow-600 hover:to-yellow-700 focus:ring-yellow-500 shadow-lg",
-    icon: "bg-transparent text-red-500 hover:bg-red-50 focus:ring-red-200 border-0 shadow-none",
-  };
+    // Size styles
+    const sizeStyles = {
+      sm: "h-8 px-3 text-xs",
+      md: "h-10 px-4 py-2",
+      lg: "h-12 px-6 text-lg",
+      xl: "h-14 px-8 text-xl",
+    };
 
-  const widthClass = fullWidth ? "w-full" : "";
-  const isDisabled = disabled || loading;
+    // Click animation styles
+    const animationStyles = {
+      none: "",
+      scale: "active:scale-95 transition-transform duration-150",
+      bounce: "active:scale-110 transition-transform duration-150",
+      pulse: "active:animate-pulse transition-all duration-150",
+      press: "active:translate-y-1 transition-transform duration-150",
+    };
 
-  // اگر فقط آیکون باشد، استایل‌های مخصوص اعمال شود
-  const isIconOnly = !children && icon;
-  const iconOnlyClass = isIconOnly
-    ? "aspect-square p-2 justify-center min-w-[2.5rem]"
-    : "";
+    const baseStyles =
+      "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
 
-  const renderContent = () => {
-    if (loading) {
-      return (
-        <>
-          <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+    return (
+      <button
+        className={cn(
+          baseStyles,
+          variantStyles[variant],
+          sizeStyles[size],
+          animationStyles[clickAnimation],
+          fullWidth && "w-full",
+          loading && "cursor-wait",
+          className
+        )}
+        disabled={isDisabled}
+        ref={ref}
+        {...props}
+      >
+        {loading && (
+          <svg
+            className="mr-2 h-4 w-4 animate-spin"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
             <circle
               className="opacity-25"
               cx="12"
@@ -89,7 +103,6 @@ export default function Button({
               r="10"
               stroke="currentColor"
               strokeWidth="4"
-              fill="none"
             />
             <path
               className="opacity-75"
@@ -97,49 +110,22 @@ export default function Button({
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
             />
           </svg>
-          {children || "Loading..."}
-        </>
-      );
-    }
-
-    if (isIconOnly) {
-      return (
-        <span className="text-xl flex items-center justify-center w-full h-full">
-          {icon}
-        </span>
-      );
-    }
-
-    return (
-      <>
-        {icon && iconPosition === "left" && (
-          <span className="text-lg flex-shrink-0">{icon}</span>
         )}
-        {children && <span className="flex-1 text-center">{children}</span>}
-        {icon && iconPosition === "right" && (
-          <span className="text-lg flex-shrink-0">{icon}</span>
+
+        {!loading && icon && iconPosition === "left" && (
+          <span className="mr-2">{icon}</span>
         )}
-      </>
+
+        {children}
+
+        {!loading && icon && iconPosition === "right" && (
+          <span className="ml-2">{icon}</span>
+        )}
+      </button>
     );
-  };
+  }
+);
 
-  return (
-    <button
-      type={type}
-      className={`
-        ${base} 
-        ${sizes[size]} 
-        ${variants[variant]}
-        ${widthClass}
-        ${iconOnlyClass}
-        ${className}
-      `.trim()}
-      onClick={onClick}
-      disabled={isDisabled}
-      title={title}
-      aria-label={title}
-    >
-      {renderContent()}
-    </button>
-  );
-}
+Button.displayName = "Button";
+
+export default Button;

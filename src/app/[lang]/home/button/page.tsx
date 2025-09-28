@@ -1,26 +1,17 @@
+// app/button-demo/page.tsx
 "use client";
 
 import Button from "@/components/ui/Button";
+import Section from "@/components/app/demo/Section";
+import ButtonPlayground from "@/components/app/demo/button/ButtonPlayground";
+import CodeBlock from "@/components/app/demo/CodeBlock";
 import { useState } from "react";
 
-export default function ButtonExample() {
+export default function ButtonDemoPage() {
   const [loadingStates, setLoadingStates] = useState<{
     [key: string]: boolean;
   }>({});
   const [isLiked, setIsLiked] = useState(false);
-
-  // State برای Playground
-  const [playgroundConfig, setPlaygroundConfig] = useState({
-    variant: "primary" as const,
-    size: "md" as const,
-    text: "Custom Button",
-    withIcon: false,
-    iconPosition: "left" as const,
-    disabled: false,
-    loading: false,
-    fullWidth: false,
-    customClass: "",
-  });
 
   const handleLoadingClick = (buttonId: string) => {
     setLoadingStates((prev) => ({ ...prev, [buttonId]: true }));
@@ -31,41 +22,6 @@ export default function ButtonExample() {
 
   const toggleLike = () => {
     setIsLiked(!isLiked);
-  };
-
-  // تابع برای تولید کد بر اساس تنظیمات
-  const generatePlaygroundCode = () => {
-    const {
-      variant,
-      size,
-      text,
-      withIcon,
-      iconPosition,
-      disabled,
-      loading,
-      fullWidth,
-      customClass,
-    } = playgroundConfig;
-
-    let code = `<Button\n`;
-    code += `  variant="${variant}"\n`;
-    code += `  size="${size}"\n`;
-
-    if (withIcon) {
-      code += `  icon="⭐"\n`;
-      code += `  iconPosition="${iconPosition}"\n`;
-    }
-
-    if (disabled) code += `  disabled={${disabled}}\n`;
-    if (loading) code += `  loading={${loading}}\n`;
-    if (fullWidth) code += `  fullWidth={${fullWidth}}\n`;
-    if (customClass) code += `  className="${customClass}"\n`;
-
-    code += `>\n`;
-    code += `  ${text}\n`;
-    code += `</Button>`;
-
-    return code;
   };
 
   return (
@@ -89,231 +45,7 @@ export default function ButtonExample() {
           className="mb-12"
           fullWidth
         >
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* Controls */}
-            <div className="space-y-6">
-              <h3 className="text-xl font-semibold text-slate-800 mb-4">
-                Configuration
-              </h3>
-
-              <div className="grid grid-cols-2 gap-4">
-                {/* Variant */}
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
-                    Variant
-                  </label>
-                  <select
-                    value={playgroundConfig.variant}
-                    onChange={(e) =>
-                      setPlaygroundConfig((prev) => ({
-                        ...prev,
-                        variant: e.target.value as any,
-                      }))
-                    }
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="primary">Primary</option>
-                    <option value="secondary">Secondary</option>
-                    <option value="outline">Outline</option>
-                    <option value="danger">Danger</option>
-                    <option value="success">Success</option>
-                    <option value="warning">Warning</option>
-                    <option value="icon">Icon</option>
-                  </select>
-                </div>
-
-                {/* Size */}
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
-                    Size
-                  </label>
-                  <select
-                    value={playgroundConfig.size}
-                    onChange={(e) =>
-                      setPlaygroundConfig((prev) => ({
-                        ...prev,
-                        size: e.target.value as any,
-                      }))
-                    }
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="sm">Small</option>
-                    <option value="md">Medium</option>
-                    <option value="lg">Large</option>
-                    <option value="xl">XL</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Text Input */}
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-                  Button Text
-                </label>
-                <input
-                  type="text"
-                  value={playgroundConfig.text}
-                  onChange={(e) =>
-                    setPlaygroundConfig((prev) => ({
-                      ...prev,
-                      text: e.target.value,
-                    }))
-                  }
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter button text..."
-                />
-              </div>
-
-              {/* Icon Settings */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      checked={playgroundConfig.withIcon}
-                      onChange={(e) =>
-                        setPlaygroundConfig((prev) => ({
-                          ...prev,
-                          withIcon: e.target.checked,
-                        }))
-                      }
-                      className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-                    />
-                    <span className="text-sm font-medium text-slate-700">
-                      With Icon
-                    </span>
-                  </label>
-                </div>
-
-                {playgroundConfig.withIcon && (
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Icon Position
-                    </label>
-                    <select
-                      value={playgroundConfig.iconPosition}
-                      onChange={(e) =>
-                        setPlaygroundConfig((prev) => ({
-                          ...prev,
-                          iconPosition: e.target.value as any,
-                        }))
-                      }
-                      className="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      <option value="left">Left</option>
-                      <option value="right">Right</option>
-                    </select>
-                  </div>
-                )}
-              </div>
-
-              {/* States */}
-              <div className="grid grid-cols-3 gap-4">
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    checked={playgroundConfig.disabled}
-                    onChange={(e) =>
-                      setPlaygroundConfig((prev) => ({
-                        ...prev,
-                        disabled: e.target.checked,
-                      }))
-                    }
-                    className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-                  />
-                  <span className="text-sm font-medium text-slate-700">
-                    Disabled
-                  </span>
-                </label>
-
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    checked={playgroundConfig.loading}
-                    onChange={(e) =>
-                      setPlaygroundConfig((prev) => ({
-                        ...prev,
-                        loading: e.target.checked,
-                      }))
-                    }
-                    className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-                  />
-                  <span className="text-sm font-medium text-slate-700">
-                    Loading
-                  </span>
-                </label>
-
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    checked={playgroundConfig.fullWidth}
-                    onChange={(e) =>
-                      setPlaygroundConfig((prev) => ({
-                        ...prev,
-                        fullWidth: e.target.checked,
-                      }))
-                    }
-                    className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-                  />
-                  <span className="text-sm font-medium text-slate-700">
-                    Full Width
-                  </span>
-                </label>
-              </div>
-
-              {/* Custom Class */}
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-                  Custom CSS Classes
-                </label>
-                <input
-                  type="text"
-                  value={playgroundConfig.customClass}
-                  onChange={(e) =>
-                    setPlaygroundConfig((prev) => ({
-                      ...prev,
-                      customClass: e.target.value,
-                    }))
-                  }
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="e.g., rounded-full shadow-lg"
-                />
-                <p className="text-xs text-slate-500 mt-1">
-                  Add custom Tailwind classes
-                </p>
-              </div>
-            </div>
-
-            {/* Preview & Code */}
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-xl font-semibold text-slate-800 mb-4">
-                  Live Preview
-                </h3>
-                <div className="bg-slate-50 rounded-xl p-8 border-2 border-dashed border-slate-200 min-h-[200px] flex items-center justify-center">
-                  <Button
-                    variant={playgroundConfig.variant}
-                    size={playgroundConfig.size}
-                    disabled={playgroundConfig.disabled}
-                    loading={playgroundConfig.loading}
-                    fullWidth={playgroundConfig.fullWidth}
-                    icon={playgroundConfig.withIcon ? "⭐" : undefined}
-                    iconPosition={playgroundConfig.iconPosition}
-                    className={playgroundConfig.customClass}
-                  >
-                    {playgroundConfig.text}
-                  </Button>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-xl font-semibold text-slate-800 mb-4">
-                  Generated Code
-                </h3>
-                <CodeBlock code={generatePlaygroundCode()} />
-              </div>
-            </div>
-          </div>
+          <ButtonPlayground />
         </Section>
 
         {/* Main Grid */}
@@ -424,6 +156,9 @@ export default function ButtonExample() {
               <Button icon="📧" iconPosition="left" variant="success">
                 Send Email
               </Button>
+              <Button icon="🔒" iconPosition="right" variant="danger">
+                Secure Login
+              </Button>
             </div>
           </Section>
 
@@ -463,6 +198,8 @@ export default function ButtonExample() {
               />
               <Button icon="⚙️" title="Settings" variant="secondary" />
               <Button icon="🔍" title="Search" size="sm" variant="outline" />
+              <Button icon="📱" title="Mobile" variant="primary" />
+              <Button icon="💬" title="Chat" variant="success" />
             </div>
           </Section>
 
@@ -510,6 +247,13 @@ export default function ButtonExample() {
               >
                 {loadingStates.loading2 ? "Saving..." : "Save Changes"}
               </Button>
+              <Button
+                loading={loadingStates.loading3}
+                onClick={() => handleLoadingClick("loading3")}
+                variant="danger"
+              >
+                {loadingStates.loading3 ? "Deleting..." : "Delete Item"}
+              </Button>
             </div>
           </Section>
 
@@ -550,6 +294,99 @@ export default function ButtonExample() {
               <Button fullWidth variant="outline">
                 Cancel Order
               </Button>
+              <Button fullWidth icon="🚀" variant="warning">
+                Launch Project
+              </Button>
+            </div>
+          </Section>
+
+          {/* Section 7: Combined Examples */}
+          <Section
+            title="🎪 Combined Examples"
+            description="Real-world button combinations"
+            codeExample={`{/* Form actions */}
+<div className="flex gap-3">
+  <Button variant="outline">
+    Cancel
+  </Button>
+  <Button 
+    variant="primary" 
+    loading={isSubmitting}
+    icon="✅"
+  >
+    Submit Form
+  </Button>
+</div>
+
+{/* Card actions */}
+<div className="flex gap-2">
+  <Button 
+    icon="👁️" 
+    variant="outline" 
+    size="sm"
+  >
+    View
+  </Button>
+  <Button 
+    icon="✏️" 
+    variant="secondary" 
+    size="sm"
+  >
+    Edit
+  </Button>
+  <Button 
+    icon="🗑️" 
+    variant="danger" 
+    size="sm"
+  >
+    Delete
+  </Button>
+</div>`}
+            fullWidth
+          >
+            <div className="space-y-6">
+              {/* Form Actions */}
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Button variant="outline" fullWidth className="sm:flex-1">
+                  Cancel
+                </Button>
+                <Button
+                  variant="primary"
+                  loading={loadingStates.formSubmit}
+                  onClick={() => handleLoadingClick("formSubmit")}
+                  icon="✅"
+                  fullWidth
+                  className="sm:flex-1"
+                >
+                  Submit Form
+                </Button>
+              </div>
+
+              {/* Card Actions */}
+              <div className="flex gap-2 justify-center">
+                <Button icon="👁️" variant="outline" size="sm">
+                  View
+                </Button>
+                <Button icon="✏️" variant="secondary" size="sm">
+                  Edit
+                </Button>
+                <Button icon="🗑️" variant="danger" size="sm">
+                  Delete
+                </Button>
+              </div>
+
+              {/* Social Actions */}
+              <div className="flex gap-2 justify-center">
+                <Button icon="👍" variant="outline" size="sm">
+                  Like
+                </Button>
+                <Button icon="🔄" variant="outline" size="sm">
+                  Share
+                </Button>
+                <Button icon="❤️" variant="outline" size="sm">
+                  Save
+                </Button>
+              </div>
             </div>
           </Section>
         </div>
@@ -617,84 +454,66 @@ export default function ButtonExample() {
   variant="primary"
 >
   {isLoading ? 'Loading...' : 'Save'}
+</Button>
+
+{/* Full width mobile button */}
+<Button 
+  fullWidth 
+  icon="📱"
+  variant="primary"
+  size="lg"
+>
+  Download App
+</Button>
+
+{/* Button with custom styles */}
+<Button 
+  variant="primary"
+  className="rounded-full shadow-lg hover:scale-105 transition-transform"
+>
+  Animated Button
 </Button>`}
               />
             </div>
           </div>
         </Section>
+
+        {/* Features Section */}
+        <Section
+          title="✨ Features"
+          description="What makes this button component special"
+          className="mt-8"
+          fullWidth
+        >
+          <div className="grid md:grid-cols-3 gap-6 text-center">
+            <div className="p-4">
+              <div className="text-2xl mb-2">🎨</div>
+              <h4 className="font-semibold text-slate-800 mb-2">
+                Fully Customizable
+              </h4>
+              <p className="text-slate-600 text-sm">
+                7 variants, 4 sizes, and full Tailwind CSS support
+              </p>
+            </div>
+            <div className="p-4">
+              <div className="text-2xl mb-2">⚡</div>
+              <h4 className="font-semibold text-slate-800 mb-2">
+                TypeScript Ready
+              </h4>
+              <p className="text-slate-600 text-sm">
+                Fully typed with TypeScript for better development experience
+              </p>
+            </div>
+            <div className="p-4">
+              <div className="text-2xl mb-2">🎯</div>
+              <h4 className="font-semibold text-slate-800 mb-2">Accessible</h4>
+              <p className="text-slate-600 text-sm">
+                Built with accessibility in mind, supporting keyboard navigation
+              </p>
+            </div>
+          </div>
+        </Section>
       </div>
-    </div>
-  );
-}
-
-// کامپوننت Section
-function Section({
-  title,
-  description,
-  children,
-  codeExample,
-  fullWidth = false,
-  className = "",
-}: {
-  title: string;
-  description: string;
-  children: React.ReactNode;
-  codeExample?: string;
-  fullWidth?: boolean;
-  className?: string;
-}) {
-  const [showCode, setShowCode] = useState(false);
-
-  return (
-    <div
-      className={`bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-slate-200/60 p-6 ${className}`}
-    >
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-slate-800 mb-2">{title}</h2>
-        <p className="text-slate-600 mb-4">{description}</p>
-
-        {codeExample && (
-          <button
-            onClick={() => setShowCode(!showCode)}
-            className="text-sm bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            {showCode ? "🙈 Hide Code" : "👁️ Show Code"}
-          </button>
-        )}
-      </div>
-
-      {codeExample && showCode && (
-        <div className="mb-6">
-          <CodeBlock code={codeExample} />
-        </div>
-      )}
-
-      <div className={fullWidth ? "w-full" : ""}>{children}</div>
-    </div>
-  );
-}
-
-// کامپوننت CodeBlock
-function CodeBlock({ code }: { code: string }) {
-  const [copied, setCopied] = useState(false);
-
-  const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  return (
-    <div className="bg-slate-900 rounded-xl p-4 overflow-x-auto relative">
-      <button
-        onClick={copyToClipboard}
-        className="absolute top-3 right-3 bg-slate-700 text-white px-3 py-1 rounded-lg text-sm hover:bg-slate-600 transition-colors"
-      >
-        {copied ? "✅ Copied!" : "📋 Copy"}
-      </button>
-      <pre className="text-green-400 text-sm whitespace-pre-wrap font-mono pt-6">
-        {code}
-      </pre>
     </div>
   );
 }
