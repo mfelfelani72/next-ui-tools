@@ -17,6 +17,7 @@ const navigation: NavItem[] = [
     id: "ui-kits",
     label: "UI Kits",
     children: [
+      { id: "icon", label: "icon", href: "/en/home/icon" },
       { id: "buttons", label: "Buttons", href: "/en/home/button" },
       { id: "input", href: "/en/home/input", label: "Input" },
       { id: "checkbox", href: "/en/home/checkbox", label: "Checkbox" },
