@@ -15,14 +15,24 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fa" dir="rtl">
-      <body className="flex">
+      <body className="flex h-screen overflow-hidden">
         {/* Sidebar */}
-        <Sidebar />
+        <div className="flex-none h-screen">
+          <Sidebar />
+        </div>
 
         {/* Main Content */}
-        <div className="flex-1 flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-1 p-4 bg-gray-50">{children}</main>
+        <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
+          {/* Sticky Header */}
+          <div className="sticky top-0 z-50">
+            <Header />
+          </div>
+
+          {/* Main scrollable content */}
+          <main className="flex-1 overflow-auto p-4 bg-gray-50">
+            {children}
+          </main>
+
           <Footer />
         </div>
       </body>
