@@ -21,6 +21,7 @@ const navigation: NavItem[] = [
       { id: "input", href: "/en/home/input", label: "Input" },
       { id: "checkbox", href: "/en/home/checkbox", label: "Checkbox" },
       { id: "radio", href: "/en/home/radio", label: "Radio" },
+      { id: "accordion", href: "/en/home/accordion", label: "Accordion" },
     ],
   },
   { id: "docs", href: "/docs", label: "Documentation" },
