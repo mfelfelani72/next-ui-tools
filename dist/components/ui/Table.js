@@ -1,0 +1,4 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+export default function Table({ columns, data }) {
+    return (_jsx("div", { className: "overflow-x-auto rounded-lg shadow border border-gray-200", children: _jsxs("table", { className: "min-w-full divide-y divide-gray-200", children: [_jsx("thead", { className: "bg-gray-100", children: _jsx("tr", { children: columns.map((col, idx) => (_jsx("th", { className: "px-4 py-2 text-left text-gray-700 font-medium", children: col.header }, idx))) }) }), _jsx("tbody", { className: "bg-white divide-y divide-gray-200", children: data.map((row, idx) => (_jsx("tr", { className: "hover:bg-gray-50 transition-colors", children: columns.map((col, cidx) => (_jsx("td", { className: "px-4 py-2 text-gray-800", children: row[col.accessor] }, cidx))) }, idx))) })] }) }));
+}

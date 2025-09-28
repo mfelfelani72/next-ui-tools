@@ -1,0 +1,18 @@
+{
+    "home": {
+        "title": "Welcome to Blog",
+        "description": "This is the English home page."
+    },
+    "about": {
+        "title": "About Us",
+        "content": "This is about page in English."
+    },
+    "posts": {
+        "title": "Blog Posts",
+        "description": "Here are all the posts."
+    },
+    "postDetail": {
+        "title": "Post Detail",
+        "content": "This is the detail of post {id}."
+    }
+}
