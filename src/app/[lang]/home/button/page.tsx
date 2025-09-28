@@ -6,6 +6,9 @@ import Section from "@/components/app/demo/Section";
 import ButtonPlayground from "@/components/app/demo/button/ButtonPlayground";
 import CodeBlock from "@/components/app/demo/CodeBlock";
 import { useState } from "react";
+import DemoHeader from "@/components/app/demo/Header";
+import FeaturesItem from "@/components/app/demo/FeaturesItem";
+import UsageGuide from "@/components/app/demo/UsageGuide";
 
 export default function ButtonDemoPage() {
   const [loadingStates, setLoadingStates] = useState<{
@@ -28,15 +31,11 @@ export default function ButtonDemoPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50/30 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Button Component
-          </h1>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            A highly customizable and flexible button component built with
-            React, TypeScript, and Tailwind CSS
-          </p>
-        </div>
+        {/* Header */}
+        <DemoHeader
+          title="Button Component"
+          description="A highly customizable and flexible button component built with React, TypeScript, and Tailwind CSS"
+        />
 
         {/* Playground Section */}
         <Section
@@ -392,24 +391,10 @@ export default function ButtonDemoPage() {
         </div>
 
         {/* Usage Section */}
-        <Section
-          title="📚 Complete Usage Guide"
-          description="Import and usage examples"
+        <UsageGuide
           className="mt-12"
-          fullWidth
-        >
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-slate-800">Import</h3>
-              <CodeBlock
-                code={`import Button from '@/components/ui/Button';`}
-              />
-
-              <h3 className="text-lg font-semibold text-slate-800 mt-6">
-                Basic Props
-              </h3>
-              <CodeBlock
-                code={`type ButtonProps = {
+          importCode={`import Button from '@/components/ui/Button';`}
+          propsCode={`type ButtonProps = {
   children?: React.ReactNode;
   variant?: "primary" | "secondary" | "outline" | 
            "danger" | "success" | "warning" | "icon";
@@ -423,15 +408,7 @@ export default function ButtonDemoPage() {
   className?: string;
   title?: string;
 };`}
-              />
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-slate-800">
-                Quick Examples
-              </h3>
-              <CodeBlock
-                code={`{/* Most common usage */}
+          examplesCode={`{/* Most common usage */} 
 <Button variant="primary" onClick={handleClick}>
   Click Me
 </Button>
@@ -473,46 +450,34 @@ export default function ButtonDemoPage() {
 >
   Animated Button
 </Button>`}
-              />
-            </div>
-          </div>
-        </Section>
+        />
 
         {/* Features Section */}
-        <Section
+
+        <FeaturesItem
           title="✨ Features"
           description="What makes this button component special"
-          className="mt-8"
-          fullWidth
-        >
-          <div className="grid md:grid-cols-3 gap-6 text-center">
-            <div className="p-4">
-              <div className="text-2xl mb-2">🎨</div>
-              <h4 className="font-semibold text-slate-800 mb-2">
-                Fully Customizable
-              </h4>
-              <p className="text-slate-600 text-sm">
-                7 variants, 4 sizes, and full Tailwind CSS support
-              </p>
-            </div>
-            <div className="p-4">
-              <div className="text-2xl mb-2">⚡</div>
-              <h4 className="font-semibold text-slate-800 mb-2">
-                TypeScript Ready
-              </h4>
-              <p className="text-slate-600 text-sm">
-                Fully typed with TypeScript for better development experience
-              </p>
-            </div>
-            <div className="p-4">
-              <div className="text-2xl mb-2">🎯</div>
-              <h4 className="font-semibold text-slate-800 mb-2">Accessible</h4>
-              <p className="text-slate-600 text-sm">
-                Built with accessibility in mind, supporting keyboard navigation
-              </p>
-            </div>
-          </div>
-        </Section>
+          className={"mt-8"}
+          features={[
+            {
+              icon: "🎨",
+              title: "Fully Customizable",
+              description: "7 variants, 4 sizes, and full Tailwind CSS support",
+            },
+            {
+              icon: "⚡",
+              title: "TypeScript Ready",
+              description:
+                "Fully typed with TypeScript for better development experience",
+            },
+            {
+              icon: "🎯",
+              title: "Accessible",
+              description:
+                "Built with accessibility in mind, supporting keyboard navigation",
+            },
+          ]}
+        />
       </div>
     </div>
   );
