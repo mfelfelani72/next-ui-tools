@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 // Import example icons
 import {
-  DangerIcon,
+  DangerSquareIcon,
   CloseSquareIcon,
   ShowIcon,
   HideIcon,
@@ -18,7 +18,7 @@ import {
 import IconsPlayground from "@/components/app/demo/icon/IconsPlayground";
 
 const iconList = [
-  { name: "ArrowRight", component: DangerIcon },
+  { name: "ArrowRight", component: DangerSquareIcon },
 
   { name: "CloseSquare", component: CloseSquareIcon },
   { name: "Show", component: ShowIcon },
@@ -38,7 +38,7 @@ export default function IconsDemoPage() {
   const [iconColor, setIconColor] = useState("text-indigo-600");
 
   const IconComponent =
-    iconList.find((i) => i.name === selectedIcon)?.component || DangerIcon;
+    iconList.find((i) => i.name === selectedIcon)?.component || DangerSquareIcon;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50/30 py-8 px-4">
@@ -69,7 +69,7 @@ export default function IconsDemoPage() {
             <div className="flex gap-4 items-center">
               {Object.entries(sizeMap).map(([size, className]) => (
                 <div key={size} className="flex flex-col items-center">
-                  <DangerIcon className={cn(className, "text-blue-600")} />
+                  <DangerSquareIcon className={cn(className, "text-blue-600")} />
                   <span className="text-sm mt-1">{size.toUpperCase()}</span>
                 </div>
               ))}
@@ -82,10 +82,10 @@ export default function IconsDemoPage() {
             description="Icons can easily change color using Tailwind classes"
           >
             <div className="flex gap-4 items-center">
-              <DangerIcon className="w-6 h-6 text-red-500" />
-              <DangerIcon className="w-6 h-6 text-green-500" />
-              <DangerIcon className="w-6 h-6 text-yellow-500" />
-              <DangerIcon className="w-6 h-6 text-indigo-600" />
+              <DangerSquareIcon className="w-6 h-6 text-red-500" />
+              <DangerSquareIcon className="w-6 h-6 text-green-500" />
+              <DangerSquareIcon className="w-6 h-6 text-yellow-500" />
+              <DangerSquareIcon className="w-6 h-6 text-indigo-600" />
             </div>
           </Section>
 
@@ -111,11 +111,11 @@ export default function IconsDemoPage() {
         {/* Usage Guide */}
         <UsageGuide
           className="mt-12"
-          importCode={`import { DangerIcon, CloseSquareIcon } from '@/components/ui/icons';`}
+          importCode={`import { DangerSquareIcon, CloseSquareIcon } from '@/components/ui/icons';`}
           propsCode={`type IconProps = {
   className?: string; // Tailwind classes for size & color
 };`}
-          examplesCode={`<DangerIcon className="w-6 h-6 text-indigo-600" />
+          examplesCode={`<DangerSquareIcon className="w-6 h-6 text-indigo-600" />
 <CloseSquareIcon className="w-8 h-8 text-red-500" />`}
         />
 
